@@ -1,7 +1,7 @@
 DELIMITER //
 
 -- ADD Procedures
-
+DROP PROCEDURE IF EXISTS AddPharmacy //
 CREATE PROCEDURE AddPharmacy(IN name VARCHAR(100), IN address VARCHAR(100), IN phone VARCHAR(15))
 BEGIN
     INSERT INTO Pharmacy (PharmacyName, PharmacyAddress, PhoneNumber)
