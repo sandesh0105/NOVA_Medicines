@@ -34,17 +34,19 @@ create table Drug (
     FOREIGN KEY (CoName) REFERENCES PharmaceuticalCompany(CoName) ON DELETE CASCADE
 );
 CREATE TABLE Pharmacy (
-    PharmacyName VARCHAR(100) PRIMARY KEY,
-    PharmacyAddress TEXT,
-    PhoneNumber VARCHAR(15)
+    PharmacyName VARCHAR(100),
+    PharmacyAddress VARCHAR(100),
+    PhoneNumber VARCHAR(15),
+    PRIMARY KEY(PharmacyName,PharmacyAddress)
 );
 
 create table Sells (
     PharmacyName VARCHAR(50),
     DrugName VARCHAR(30),
     Price DECIMAL(10, 2),
-    PRIMARY KEY (PharmacyName, DrugName),
-    FOREIGN KEY (PharmacyName) REFERENCES Pharmacy(PharmacyName),
+    Phloc VARCHAR(100),
+    PRIMARY KEY (PharmacyName, DrugName, Phloc),
+    FOREIGN KEY (PharmacyName, Phloc) REFERENCES Pharmacy(PharmacyName,PharmacyAddress),
     FOREIGN KEY (DrugName) REFERENCES Drug(TradeName)
 );
 
