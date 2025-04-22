@@ -29,19 +29,21 @@ create table Drug (
     FOREIGN KEY (CoName) REFERENCES PharmaceuticalCompany(CoName) ON DELETE CASCADE
 );
 
-create table Sells (
-    PharmacyName VARCHAR(50),
-    DrugName VARCHAR(30),
-    Price DECIMAL(10, 2),
-    PRIMARY KEY (PharmacyName, DrugName),
-    FOREIGN KEY (PharmacyName) REFERENCES Pharmacy(PharmacyName),
-    FOREIGN KEY (DrugName) REFERENCES Drug(TradeName)
-);
-
 CREATE TABLE Pharmacy (
     PharmacyName VARCHAR(100) PRIMARY KEY,
     PharmacyAddress TEXT,
     PhoneNumber VARCHAR(15)
+);
+
+create table Sells (
+    PharmacyName VARCHAR(50),
+    DrugName VARCHAR(30),
+    Phloc VARCHAR(30),
+    Price DECIMAL(10, 2),
+    PRIMARY KEY (PharmacyName, DrugName,Phloc),
+    FOREIGN KEY (PharmacyName) REFERENCES Pharmacy(PharmacyName),
+    FOREIGN KEY (DrugName) REFERENCES Drug(TradeName)
+    FOREIGN KEY (Phloc) REFERENCES Pharmacy(PharmacyAddress)
 );
 
 create table Prescribes (
@@ -60,12 +62,13 @@ CREATE TABLE Contract (
     -- ContractID SERIAL PRIMARY KEY,
     PharmacyName VARCHAR(100),
     CompanyName VARCHAR(100),
+    PharmacyAddress VARCHAR(100),
     StartDate DATE,
     EndDate DATE,
     Content TEXT,
     SupervisorID CHAR(12),
-    PRIMARY KEY (PharmacyName, CompanyName)
+    PRIMARY KEY (PharmacyName, CompanyName,PharmacyAddress),
     FOREIGN KEY (PharmacyName) REFERENCES Pharmacy(PharmacyName),
     FOREIGN KEY (CompanyName) REFERENCES PharmaceuticalCompany(CoName),
-    FOREIGN KEY (SupervisorID) REFERENCES Doctor(AadharID)
+    FOREIGN KEY (PharmacyAddress) REFERENCES Pharmacy(PharmacyAddress)
 );
