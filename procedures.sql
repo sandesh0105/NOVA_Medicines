@@ -43,6 +43,21 @@ BEGIN
     VALUES (company, name, address, startDate, endDate, content, supervisor);
 END //
 
+
+DROP PROCEDURE IF EXISTS AddPrescription //
+CREATE PROCEDURE AddPrescription(IN pAID CHAR(12), IN dAID CHAR(12), IN Drug VARCHAR(30), IN prDate DATE, IN Qantity INT)
+BEGIN
+    INSERT INTO Contract (pAadharID, dAadharID, DrugName, prescriptionDate, Qty)
+    VALUES (pAID, dAID, Drug, prDate, Qantity);
+END //
+
+DROP PROCEDURE IF EXISTS AddSellsData //
+CREATE PROCEDURE AddSellsData(IN PhName VARCHAR(50), IN PhAddr VARCHAR(100), IN drug VARCHAR(30), IN price DECIMAL(10, 2))
+BEGIN
+    INSERT INTO Contract (PharmacyName, Phloc, DrugName, Price)
+    VALUES (PhName, PhAddr, drug, price);
+END //
+
 -- UPDATE Procedures
 
 DROP PROCEDURE IF EXISTS UpdatePharmacyPhone //
@@ -73,6 +88,57 @@ DROP PROCEDURE IF EXISTS DeletePharmacy //
 CREATE PROCEDURE DeletePharmacy(IN name VARCHAR(100), IN address VARCHAR(100))
 BEGIN
     DELETE FROM Pharmacy WHERE PharmacyName = name AND PharmacyAddress = address;
+END //
+
+DROP PROCEDURE IF EXISTS DeletePatient //
+CREATE PROCEDURE DeletePatient(IN aadhar CHAR(12))
+BEGIN
+    DELETE FROM Patient WHERE pAadharID = aadhar;
+END //
+
+DROP PROCEDURE IF EXISTS DeletePharmaCo //
+CREATE PROCEDURE DeletePharmaCo(IN companyName VARCHAR(30))
+BEGIN
+    DELETE FROM PharmaceuticalCompany WHERE CoName = companyName;
+END //
+
+DROP PROCEDURE IF EXISTS DeleteDrug //
+CREATE PROCEDURE DeleteDrug(IN tradeName VARCHAR(30), IN companyName VARCHAR(30))
+BEGIN
+    DELETE FROM Drug WHERE TradeName = tradeName AND CoName = companyName;
+END //
+
+DROP PROCEDURE IF EXISTS DeleteSells //
+CREATE PROCEDURE DeleteSells(
+    IN pharmacyName VARCHAR(50),
+    IN pharmacyLoc VARCHAR(100),
+    IN drugName VARCHAR(30)
+)
+BEGIN
+    DELETE FROM Sells 
+    WHERE PharmacyName = pharmacyName AND Phloc = pharmacyLoc AND DrugName = drugName;
+END //
+
+DROP PROCEDURE IF EXISTS DeletePrescription //
+CREATE PROCEDURE DeletePrescription(
+    IN patientID CHAR(12),
+    IN doctorID CHAR(12),
+    IN drugName VARCHAR(30)
+)
+BEGIN
+    DELETE FROM Prescribes 
+    WHERE pAadharID = patientID AND dAadharID = doctorID AND DrugName = drugName;
+END //
+
+DROP PROCEDURE IF EXISTS DeleteContract //
+CREATE PROCEDURE DeleteContract(
+    IN pharmacyName VARCHAR(100),
+    IN pharmacyAddress VARCHAR(100),
+    IN companyName VARCHAR(30)
+)
+BEGIN
+    DELETE FROM Contract 
+    WHERE PharmacyName = pharmacyName AND PharmacyAddress = pharmacyAddress AND CompanyName = companyName;
 END //
 
 -- Reporting Procedures
