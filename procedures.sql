@@ -184,5 +184,41 @@ BEGIN
     SELECT pName, pAadharID FROM Patient
     WHERE PrimaryPhysicianID = doctorID;
 END //
+    
+CREATE PROCEDURE AddPrescription(
+    IN p_patientID CHAR(12),
+    IN p_doctorID CHAR(12),
+    IN p_drugName VARCHAR(30),
+    IN p_date DATE,
+    IN p_quantity INT
+)
+BEGIN
+    -- Check if a prescription from this doctor to this patient for this drug already exists
+    DECLARE existing_count INT;
+    SELECT COUNT(*) INTO existing_count
+    FROM Prescribes
+    WHERE pAadharID = p_patientID AND dAadharID = p_doctorID AND DrugName = p_drugName;
+    
+    IF existing_count > 0 THEN
+        -- Update existing prescription with latest information
+        UPDATE Prescribes
+        SET prescriptionDate = p_date, Qty = p_quantity
+        WHERE pAadharID = p_patientID AND dAadharID = p_doctorID AND DrugName = p_drugName;
+    ELSE
+        -- Insert new prescription
+        INSERT INTO Prescribes (pAadharID, dAadharID, DrugName, prescriptionDate, Qty)
+        VALUES (p_patientID, p_doctorID, p_drugName, p_date, p_quantity);
+    END IF;
+END //
+
+-- Create procedure to view latest prescriptions for a patient
+CREATE PROCEDURE LatestPrescriptionsForPatient(IN p_patientID CHAR(12))
+BEGIN
+    SELECT p.DrugName, p.dAadharID, d.dName as DoctorName, p.prescriptionDate, p.Qty
+    FROM Prescribes p
+    JOIN Doctor d ON p.dAadharID = d.dAadharID
+    WHERE p.pAadharID = p_patientID
+    ORDER BY p.prescriptionDate DESC;
+END //
 
 DELIMITER ;
