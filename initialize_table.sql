@@ -16,7 +16,7 @@ create table Patient (
     pName VARCHAR(50),
     pAddress VARCHAR(200),
     Age INT,
-    PrimaryPhysicianID CHAR(12),
+    PrimaryPhysicianID CHAR(12) NOT NULL,
     FOREIGN KEY (PrimaryPhysicianID) REFERENCES Doctor(dAadharID)
 );
 
