@@ -54,9 +54,8 @@ INSERT INTO Prescribes VALUES
 ('204', '104', 'KidCare', '2025-04-04', 5),
 ('205', '105', 'OncoFix', '2025-04-05', 2);
 
-INSERT INTO Contract
-  (CompanyName, PharmacyName, PharmacyAddress, StartDate, EndDate, Content, SupervisorID)
-VALUES
+-- Insert data into Contract
+INSERT INTO Contract VALUES
   ('PharmaOne',  'MediPlus',       'Andheri West, Mumbai', '2024-01-01', '2025-01-01', 'Supply of painkillers',         '101'),
   ('MediCure',   'HealthCare Hub', 'Sector 22, Noida',     '2024-02-01', '2025-02-01', 'Neurology drugs contract',      '102'),
   ('LifeHeal',   'CureMart',       'MG Road, Bengaluru',   '2024-03-01', '2025-03-01', 'Skin medication supply',        '103'),
