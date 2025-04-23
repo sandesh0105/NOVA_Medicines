@@ -1,3 +1,5 @@
+First run initialize_tables.sql, then procedures.sql and then data.sql
+
 You can use these procedure calls
 1. CALL DrugsByCompany('PharmaOne');
 2. CALL StockByPharmacy('MediPlus','Andheri West, Mumbai');
