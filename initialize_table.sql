@@ -28,7 +28,7 @@ create table Patient (
     pAddress VARCHAR(200) NOT NULL,
     Age INT NOT NULL CHECK (Age >= 0),
     PrimaryPhysicianID CHAR(12) NOT NULL,
-    FOREIGN KEY (PrimaryPhysicianID) REFERENCES Doctor(dAadharID)
+    FOREIGN KEY (PrimaryPhysicianID) REFERENCES Doctor(dAadharID) ON DELETE RESTRICT
 );
 
 
@@ -106,22 +106,4 @@ BEGIN
     END IF;
 END//
 
--- each doctor has at least one patient
-DELIMITER //
-CREATE TRIGGER check_doctor_patients
-BEFORE DELETE ON Patient
-FOR EACH ROW
-BEGIN
-    DECLARE doctor_patient_count INT;
-    
-    SELECT COUNT(*) INTO doctor_patient_count
-    FROM Patient
-    WHERE PrimaryPhysician = OLD.PrimaryPhysician
-    AND AadharID != OLD.AadharID;
-    
-    IF doctor_patient_count = 0 THEN
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'Cannot delete the last patient of a doctor';
-    END IF;
-END//
 DELIMITER ;
