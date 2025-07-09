@@ -1,3 +1,5 @@
+A Database Management Project for managing various data like pharmacies, associated drugs and physicians etc.
+
 First run initialize_tables.sql, then procedures.sql and then data.sql
 
 You can use these procedure calls
